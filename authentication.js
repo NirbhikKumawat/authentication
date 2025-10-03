@@ -39,6 +39,13 @@ app.get('/login', (req, res) => {
     <html lang="en">
     <head>
         <title>Login</title>
+        <style>
+        body{ font-family: Arial;max-width:400px;margin:100px auto;padding:20px;}
+        input{width:100%;padding:10px;margin:10px 0;box-sizing:border-box;}
+        button{width:100%;padding:10px;background:#28a745;color:white;border:none;cursor:pointer;}
+        button:hover{background:#218838;}
+        .link{text-align:center;margin=top:20px;}
+</style>
     </head>
     <body>
     <h2>Login</h2>
