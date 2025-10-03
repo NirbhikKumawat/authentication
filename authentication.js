@@ -33,6 +33,28 @@ app.get('/', (req, res) => {
     }
 })
 
+app.get('/login', (req, res) => {
+    res.send(`
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <title>Login</title>
+    </head>
+    <body>
+    <h2>Login</h2>
+    <form method="POST" action="/login">
+    <input type="text" name="username" placeholder="username" required/>
+    <input type="password" name="password" placeholder="Password" required/>
+    <button type="submit">Login</button>
+    </form>
+    <div class="link">
+    Don't have an account? <a href="/register">Register</a>
+</div>
+</body>
+    </html>
+    `)
+})
+
 const PORT =  3000;
 app.listen(PORT, () => {
     console.log(`Server is running on localhost:${PORT}`);
