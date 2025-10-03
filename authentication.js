@@ -61,6 +61,24 @@ app.get('/login', (req, res) => {
     </html>
     `)
 })
+app.post('/login', async (req, res) => {
+    try{
+        const {username, password} = req.body;
+        const user = await User.findOne({username});
+        if(!user){
+            return res.send('<script>alert("Invalid credentials");windows.location="/login";</script>');
+        }
+        const isValidPassword = await bcrypt.compare(password, user.password);
+        if(!isValidPassword){
+            return res.send('<script>alert("Invalid credentials");windows.location="/login";</script>');
+        }
+        req.session.userId = user._id;
+        req.session.username = user.username;
+        res.redirect('/dashboard');
+    }catch(err){
+        res.status(500).send('Error logging in');
+    }
+})
 
 app.get('/register', async(req, res) => {
     res.send(`
@@ -89,6 +107,21 @@ Already have an account? <a href="/login">Login</a>
 </div>
 </body>
 </html>`)
+})
+
+app.post('/register',async(req, res) => {
+    try{
+        const {username, password} = req.body;
+        const existingUser = await User.findOne({username});
+        if(existingUser){
+            return res.send('<script>alert("Username already exists");window.location="/register";</script>')
+        }
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const user = new User({username, password:hashedPassword});
+        await user.save();
+    }catch(error){
+        res.status(500).send('Error registering the user');
+    }
 })
 
 const PORT =  3000;
