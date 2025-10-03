@@ -124,6 +124,25 @@ app.post('/register',async(req, res) => {
     }
 })
 
+app.get('/dashboard',isAuthenticated,(req,res)=>{
+    res.send(`
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Dashboard</title>
+</head>
+<body>
+<div class="header">
+<h2>Welcome,${req.session.username}!</h2>
+<form method="POST" action="/logout">
+<button type="submit">Logout</button>
+</form>
+</div>
+<p>You are successfully logged in.</p>
+</body>
+</html>`)
+})
+
 const PORT =  3000;
 app.listen(PORT, () => {
     console.log(`Server is running on localhost:${PORT}`);
