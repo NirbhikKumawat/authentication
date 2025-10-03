@@ -62,6 +62,35 @@ app.get('/login', (req, res) => {
     `)
 })
 
+app.get('/register', async(req, res) => {
+    res.send(`
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <title>Register</title>
+    <style>
+        body { font-family: Arial; max-width: 400px; margin: 100px auto; padding: 20px; }
+        input { width: 100%; padding: 10px; margin: 10px 0; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background: #007bff; color: white; border: none; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .error { color: red; margin: 10px 0; }
+        .link { text-align: center; margin-top: 20px; }
+      </style>
+</head>
+<body>
+<h2>Register</h2>
+<form method="POST" action="/register">
+<input type="text" name="username" placeholder="username" required/>
+<input type="password" name="password" placeholder="Password" required/>
+<button type="submit">Register</button>
+</form>
+<div class="link">
+Already have an account? <a href="/login">Login</a>
+</div>
+</body>
+</html>`)
+})
+
 const PORT =  3000;
 app.listen(PORT, () => {
     console.log(`Server is running on localhost:${PORT}`);
