@@ -143,6 +143,11 @@ app.get('/dashboard',isAuthenticated,(req,res)=>{
 </html>`)
 })
 
+app.post('/logout',(req,res)=>{
+    req.session.destroy();
+    res.redirect('/login');
+})
+
 const PORT =  3000;
 app.listen(PORT, () => {
     console.log(`Server is running on localhost:${PORT}`);
