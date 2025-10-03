@@ -17,6 +17,16 @@ app.use(session({
 }));
 app.use(express.static('public'));
 
+mongoose.connect('mongodb://localhost:27017/authdb', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+const userSchema = new mongoose.Schema({
+    username: { type: String, required: true, unique: true },
+    password: { type: String, required: true }
+});
+const User = mongoose.model('User', userSchema);
+
 const isAuthenticated = (req, res, next) => {
     if(req.session.userId) {
         next();
@@ -130,6 +140,12 @@ app.get('/dashboard',isAuthenticated,(req,res)=>{
 <html lang="en">
 <head>
 <title>Dashboard</title>
+<style>
+        body { font-family: Arial; max-width: 600px; margin: 50px auto; padding: 20px; }
+        .header { display: flex; justify-content: space-between; align-items: center; }
+        button { padding: 10px 20px; background: #dc3545; color: white; border: none; cursor: pointer; }
+        button:hover { background: #c82333; }
+      </style>
 </head>
 <body>
 <div class="header">
